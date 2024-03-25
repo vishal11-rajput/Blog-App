@@ -13,12 +13,13 @@ const Register = () => {
 
       const res = await fetch('http://localhost:4000/register', {method: 'POST',body: JSON.stringify({username, password}), headers: {'Content-Type':'application/json'},})
 
-      if(res.status===200){
-        alert('Register Success')
-        navigate('/login')
+      if(res.status!==200){
+        
+        alert('Register Failed')
       }
       else{
-        alert('Register Failed')
+        alert('Register Success')
+        navigate('/login')
       }
     
     
