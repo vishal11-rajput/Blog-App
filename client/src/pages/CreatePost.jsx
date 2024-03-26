@@ -2,6 +2,7 @@ import { useState } from "react";
 import React from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { useNavigate } from "react-router-dom";
 
 const modules = {
   toolbar: [
@@ -32,6 +33,7 @@ const formats = [
 ];
 
 export const CreatePost = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
@@ -45,10 +47,13 @@ export const CreatePost = () => {
     data.set("content", content);
     data.set('file', files[0])
     console.log(title, summary, content);
-    fetch("http://localhost:4000/post", {
+    const res = await fetch("http://localhost:4000/post", {
       method: "POST",
-      body: data,
-    })
+      body: data, 
+    });
+    if(res.ok){
+      navigate('/')
+    }
   }
   return (
     <form onSubmit={createNewPost}>

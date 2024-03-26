@@ -5,6 +5,10 @@ const UserModel = require('./models/UserModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
+const multer = require('multer')
+const upload = multer({dest: 'uploads/'})
+const fs = require('fs');
+const Post = require('./models/PostModel')
 const app = express();
 
 
@@ -75,6 +79,24 @@ app.get('/profile', async(req,res)=>{
 //for logout
 app.post('/logout', (req,res)=>{
     res.cookie('token', '' ).json('ok')
+})
+
+app.post ('/post', upload.single('file'),async(req,res)=>{
+    const {originalname,path} = req.file;
+    const parts = originalname.split('.');
+    const ext = parts[parts.length - 1];
+    const newPath = path+'.'+ext;
+    fs.renameSync(path,newPath);
+
+    const {title, summary, content} = req.body;
+    const postDoc = await Post.create({
+        title,
+        summary,
+        content,
+        cover: newPath
+    })
+
+    res.json(postDoc);
 })
 
 app.listen('4000', console.log('server running on port 4000'))
