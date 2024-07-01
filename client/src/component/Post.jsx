@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {useEffect}from 'react'
+import { formatISO9075 } from 'date-fns';
 
-const Post = () => {
+const Post = ({title, summary, content,cover, createdAt}) => {
   return (
     <div>
         <div className="post">
@@ -11,15 +12,13 @@ const Post = () => {
           />
         </div>
         <div className="text">
-          <h2>Nvidia offers developers a peek at new AI chip next week</h2>
+          <h2>{title}</h2>
           <p className="info">
             <a className="author">Vishal S</a>
-            <time>2024-03-14 22:32</time>
+            <time>{formatISO9075}</time>
           </p>
           <p className="summary">
-            SAN FRANCISCO, March 14 (Reuters) - How long can Nvidia (NVDA.O),
-            opens new tab and its CEO, Jensen Huang, wear the crown as the tech
-            world's dominant supplier of artificial-intelligence chips?
+            {summary}
           </p>
         </div>
       </div>

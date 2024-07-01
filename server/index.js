@@ -99,6 +99,11 @@ app.post ('/post', upload.single('file'),async(req,res)=>{
     res.json(postDoc);
 })
 
+app.get('/post', async (req,res)=>{
+    const posts = await Post.find();
+    res.json(posts)
+})
+
 app.listen('4000', console.log('server running on port 4000'))
 
 //
